@@ -1,0 +1,111 @@
+// Main Sections
+header {
+  background-color: $color--primary;
+
+  & nav {
+
+    & a {
+      color: $color--background !important;
+
+      &.nav-link {
+        margin: 0.5rem;
+        padding: 0 !important;
+      }
+
+      &:hover {
+        color: white !important;
+      }
+    }
+  }
+}
+
+body {
+  background-color: $color--background;
+  color: white;
+  font-family: $font--secondary;
+  margin: 0 auto;
+  max-width: 1300px;
+  min-width: 300px;
+}
+
+// Titles
+h1,
+h2 {
+  font-family: $font--primary;
+  font-weight: 700 !important;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+span.navbar-brand { // Holidaze
+  color: white !important;
+  font-family: $font--primary;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.logo {
+  color: $color--secondary;
+  margin-right: 0.5rem;
+}
+
+// Images
+#image__banner {
+  background-image: url('../../images/bryggen--edit.jpg');
+  background-position: 50% 75%;
+  background-size: cover;
+  height: 27vh;
+  width: 100%;
+}
+
+// Buttons
+.button--form,
+.button--choice {
+  background-color: $color--primary;
+  border: none;
+  color: white;
+  display: block;
+  margin: 0 auto;
+  padding: 4px 6px;
+  text-decoration: none;
+  width: 100px;
+
+  &:hover {
+    background-color: rgba(($color--primary), 0.6);
+  }
+}
+
+// Effects
+a {
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    color: white;
+    font-weight: bold;
+  }
+}
+
+#root {
+  background-color: $color--secondary;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+  margin: 0 1rem;
+}
+
+.error {
+  color: red;
+  margin-bottom: 2rem;
+}
+
+.success {
+  background-color: $color--go-ahead-green;
+  font-size: 1.5em;
+}
+

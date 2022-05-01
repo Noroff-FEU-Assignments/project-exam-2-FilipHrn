@@ -1,0 +1,1 @@
+export const linkLogin = document.querySelector('.link--login');

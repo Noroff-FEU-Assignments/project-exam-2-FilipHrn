@@ -1,0 +1,11 @@
+.card {
+  background-color: $color--card-display;
+  border: none;
+  margin-top: 1rem;
+
+  &-footer {
+    background-color: inherit;
+    border-top: none;
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,12 @@
+.filter {
+
+  &--side{
+    background-color: $color--card-display;
+    max-width: 300px;
+  }
+}
+
+#search__bar {
+  margin: 0 auto;
+  max-width: 300px;
+}
