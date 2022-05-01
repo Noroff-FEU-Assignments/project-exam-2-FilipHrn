@@ -6,13 +6,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
-// import { linkLogin } from '../../constants/elements';
 import { useState } from "react";
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { createPost, uploadImage } from '../../utils/createPost';
+import { uploadImage } from '../../utils/createPost';
 
 const schema = yup.object().shape({
   title: yup.string().required('Please enter your title').min(3, 'Must be at least 3 characters long'),
@@ -23,7 +22,7 @@ const schema = yup.object().shape({
 
 function Redirect() {
   const [createForm, setCreateForm] = useState(false)
-  
+
   if(!localGet('user').user.username) {
     window.location.href = "/login";
   }
