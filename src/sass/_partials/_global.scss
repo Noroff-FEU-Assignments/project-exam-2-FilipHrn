@@ -1,8 +1,31 @@
 // Main Sections
 header {
   background-color: $color--primary;
-
+  
   & nav {
+    
+    & div button.navbar-toggler {
+      border: none !important;
+
+      &:focus {
+        box-shadow: none;
+      }
+
+      & span {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      .navbar-collapse {
+        background-color: $color--primary;
+        padding: 16px;
+        position: absolute;
+        right: 0;
+        top: 100%;
+      }
+    }
+
 
     & a {
       color: $color--background !important;
@@ -60,10 +83,26 @@ span.navbar-brand { // Holidaze
 }
 
 // Buttons
+.btn-primary {
+  &:active {
+    background-color: $color--primary;
+    border-color: white;
+  }
+
+  &:focus {
+    background-color: $color--primary;
+    border-color: white;
+  }
+
+  &:hover {
+    border-color: white;
+  }
+}
+
 .button--form,
 .button--choice {
   background-color: $color--primary;
-  border: none;
+  border: 1px solid $color--primary;
   color: white;
   display: block;
   margin: 0 auto;
@@ -73,6 +112,18 @@ span.navbar-brand { // Holidaze
 
   &:hover {
     background-color: rgba(($color--primary), 0.6);
+  }
+
+  &:active {
+    border-color: $color--primary;
+  }
+  
+  &:focus {
+    box-shadow: none !important;
+  }
+
+  &:visited {
+    background-color: $color--primary;
   }
 }
 
@@ -106,6 +157,20 @@ main {
 
 .success {
   background-color: $color--go-ahead-green;
+  border: 1px solid $color--go-ahead-green;
   font-size: 1.5em;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: $color--go-ahead-green !important;
+    border-color: white;
+    box-shadow: none !important;
+  }
 }
 
+.active {
+  border-bottom: 2px solid white;
+  color: white !important;
+  font-weight: bold;
+}

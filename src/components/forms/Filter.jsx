@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col'
 function Filter() {
 
   return(
-    <Container className="mt-3 filter--side">
+    <Container className="mt-3 py-3 filter--side">
       <p className="text-center fw-bold my-0">Stars</p> {/* First Section */}
       <Row className="form-check">
         <Col><input className="form-check-input" type="checkbox" value="1" id="starRating" /></Col>

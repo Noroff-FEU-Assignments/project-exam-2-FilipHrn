@@ -1,0 +1,9 @@
+.enquiries {
+  background-color: $color--card-display;
+  border: 1px solid $color--primary;
+  border-radius: 5px;
+
+  & p {
+    word-wrap: break-word;
+  }
+}

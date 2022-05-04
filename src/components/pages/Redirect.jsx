@@ -6,7 +6,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
-import { useState } from "react";
+import axios from 'axios';
+import { useState, useEffect } from "react";
+import { enquiryAPI, contactAPI } from '../../constants/api';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -21,14 +23,34 @@ const schema = yup.object().shape({
 });
 
 function Redirect() {
-  const [createForm, setCreateForm] = useState(false)
+  const [ createForm, setCreateForm ] = useState(false);
+  const [ enquiries, setEnquiries ] = useState([]);
+  const [ showEnquiries, setShowEnquiries ] = useState(false);
+  const [ contacts, setContacts ] = useState([]);
+  const [ showContacts, setShowContacts ] = useState(false);
+  const [ loading, setLoading ] = useState(false);
 
-  if(!localGet('user').user.username) {
+  useEffect( () => {
+    setLoading(true);
+    const callAPI = async () => {
+      const result = await axios.get(enquiryAPI);
+
+      setEnquiries(result.data.data);
+
+      const contactResult = await axios.get(contactAPI);
+
+      setContacts(contactResult.data.data);
+
+      setLoading(false);
+    }
+    callAPI();
+  }, []);
+
+  if(!localGet('user')?.user.username) {
     window.location.href = "/login";
   }
 
   const name = localGet('user').user.username;
-
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
@@ -37,7 +59,19 @@ function Redirect() {
   function onSubmit(data) {
     console.log(data);
 
-    uploadImage(data.image, data.title, data.rating, data.price);
+    uploadImage(data.files, data.title, data.rating, data.price);
+  }
+
+  const kingOfTheHill = () => {
+    if(showContacts) {
+      setShowContacts(false);
+    }
+    if(showEnquiries) {
+      setShowEnquiries(false);
+    }
+    if(createForm) {
+      setCreateForm(false);
+    }
   }
 
   return(
@@ -46,12 +80,13 @@ function Redirect() {
       <Container>
         <Row>
           <Col className="text-center">
-            <Link><Button onClick={()=> setCreateForm(true)} className="button--choice d-inline-block m-3">Create</Button></Link>
-            <Link><Button className="button--choice d-inline-block m-3">Enquiries</Button></Link>
-            <Link><Button className="button--choice d-inline-block m-3">Messages</Button></Link>
+            <Link><Button onClick={() => kingOfTheHill() + setCreateForm(true)} className="button--choice d-inline-block m-3">Create</Button></Link>
+            <Link><Button onClick={() => kingOfTheHill() + setShowEnquiries(true)} className="button--choice d-inline-block m-3">Enquiries</Button></Link>
+            <Link><Button onClick={() => kingOfTheHill() + setShowContacts(true)} className="button--choice d-inline-block m-3">Messages</Button></Link>
             <Link><Button onClick={localClear} className="button--choice d-inline-block m-3">Logout</Button></Link>
           </Col>
         </Row>
+
         {createForm && (
           <Row>
             <Col>
@@ -70,7 +105,7 @@ function Redirect() {
 
                 <Form.Group className="mb-3" controlId="rating">
                   <Form.Label>Rating:</Form.Label>
-                  <Form.Control {...register("rating", { required: true })} type="text" name="files" placeholder="Your rating" />
+                  <Form.Control {...register("rating", { required: true })} type="text" placeholder="Your rating" />
                 </Form.Group>
                 {errors.rating && <span className="error d-block text-end">{errors.rating.message}</span>}
 
@@ -85,6 +120,59 @@ function Redirect() {
                 </Button>
               </Form>
             </Col>
+          </Row>
+        )}
+
+        {showEnquiries && (
+          <Row xs={1} md={3} lg={4} className="mx-auto justify-content-center">
+            {loading && (
+              <p>Loading...</p>
+            )}
+
+            {enquiries.length === 0 && (
+              <Col className="text-center m-3">
+                <p>No results</p>
+              </Col>
+            )}
+
+            {enquiries.map( enquirie => {
+              const { name, subject, message } = enquirie.attributes;
+
+              return(
+                <Col key={enquirie.attributes.id} className="enquiries m-3">
+                  <p className="mt-3">From: {name}</p>
+                  <p>Subject: {subject}</p>
+                  <p>Message: {message}</p>
+                </Col>
+              );
+            })}
+          </Row>
+        )}
+
+        {showContacts && (
+          <Row xs={1} md={3} lg={4} className="mx-auto justify-content-center">
+            {loading && (
+              <p>Loading...</p>
+            )}
+
+            {contacts.length === 0 && (
+              <Col className="text-center m-3">
+                <p>No results</p>
+              </Col>
+            )}
+
+            {contacts.map( contact => {
+              const { firstName, lastName, subject, email, message } = contact.attributes;
+
+              return(
+                <Col key={contact.attributes.id} className="enquiries m-3">
+                  <p className="mt-3">From: {firstName} {lastName}</p>
+                  <p>Email: {email}</p>
+                  <p>Subject: {subject}</p>
+                  <p>Message: {message}</p>
+                </Col>
+              );
+            })}
           </Row>
         )}
       </Container>

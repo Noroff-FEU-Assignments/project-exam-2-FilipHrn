@@ -12,25 +12,30 @@ import Login from './components/pages/Login';
 import Register from './components/pages/Register';
 import Redirect from './components/pages/Redirect';
 import { localGet } from './utils/localStorage';
+import Enquiry from './components/pages/Enquiry';
+import { useState } from "react";
 
 function App() {
+  const tabName = localGet('user')?.user?.username ? 'Profile' : 'Login';
+  const [ expanded, setExpanded ] = useState(false);
 
   return (
     <Router>
       <header>
-        <Navbar expand="md">
+        <Navbar expanded={expanded} expand="md">
           <Container>
-            <NavLink style={{textDecoration: "none"}} to="/" exact>
+            <NavLink style={{textDecoration: "none", border: "none"}} to="/" exact>
               <Navbar.Brand><i class="fa-solid fa-plane-departure logo"></i>Holidaze</Navbar.Brand>
             </NavLink>
 
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Toggle onClick={ () => setExpanded(expanded ? false : 'expanded')} aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
-                <NavLink to="/" exact className="nav-link">Home</NavLink>
-                <NavLink to="/accommodation" className="nav-link">Accommodation</NavLink>
-                <NavLink to="/contact" className="nav-link">Contact</NavLink>
-                <NavLink to={localGet('user')?.user?.username ? "/redirect":"/login"} className="nav-link link--login">Login</NavLink>
+                <NavLink onClick={ () => setExpanded(false)} activeClassName="active" to="/" exact className="nav-link">Home</NavLink>
+                <NavLink onClick={ () => setExpanded(false)} activeClassName="active" to="/accommodation" className="nav-link">Accommodation</NavLink>
+                <NavLink onClick={ () => setExpanded(false)} activeClassName="active" to="/contact" className="nav-link">Contact</NavLink>
+                <NavLink onClick={ () => setExpanded(false)} activeClassName="active" to="/enquiry" className="nav-link">Enquiry</NavLink>
+                <NavLink onClick={ () => setExpanded(false)} activeClassName="active" to={localGet('user')?.user?.username ? "/redirect":"/login"} className="nav-link link--login">{tabName}</NavLink>
               </Nav>
             </Navbar.Collapse>
           </Container>
@@ -42,6 +47,7 @@ function App() {
         <Route path="/" exact component={Home} />
         <Route path="/accommodation" component={Accommodation} />
         <Route path="/contact" component={Contact} />
+        <Route path="/enquiry" component={Enquiry} />
         <Route path="/details/:id" component={ResidentSpecific} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />

@@ -1,6 +1,6 @@
 form {
   margin: 1rem auto;
-  max-width: 600px;
+  max-width: 600px !important;
 
   & input[type=text],
   & input[type=password],
@@ -34,3 +34,15 @@ form {
   }
 }
 
+.form-check-input {
+
+  &:checked {
+  background-color: $color--primary;
+  border-color: $color--primary;
+  }
+
+  &:focus {
+    border-color: $color--primary;
+    box-shadow: none;
+  }
+}

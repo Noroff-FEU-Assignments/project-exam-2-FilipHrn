@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import uploadEnquiry from '../../utils/uploadEnquiry';
 
 const schema = yup.object().shape({
   firstName: yup.string().required('Please enter your first name').min(3, 'Must be at least 3 characters long'),
@@ -21,6 +22,8 @@ function Contact() {
 
   function onSubmit(data) {
     console.log(data);
+
+    uploadEnquiry(data.firstName, data.subject, data.message, data.lastName, data.email);
   }
 
   console.log(errors);
@@ -50,7 +53,7 @@ function Contact() {
 
         <Form.Group className="mb-3" controlId="subject">
           <Form.Label>Subject:</Form.Label>
-          <Form.Control {...register("subject", { required: true })} type="text" placeholder="Subject of your enquiry" />
+          <Form.Control {...register("subject", { required: true })} type="text" placeholder="Subject of your message" />
         </Form.Group>
           {errors.subject && <span className="error d-block text-end">{errors.subject.message}</span>}
 

@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
 
-function ResidentsDisplay({ id, estateName, estatePrice, estateRating, estateImage, link, estateType }) {
+function ResidentsDisplay({ id, estateName, estatePrice, estateRating, estateImage, link }) {
   let destination;
   let text;
 
@@ -35,7 +35,7 @@ function ResidentsDisplay({ id, estateName, estatePrice, estateRating, estateIma
 
           <Col className="flex-shrink-1">
             <Card.Footer className="ps-lg-0 pt-0 d-flex justify-content-between h-100 align-items-end">
-              <Button className="success fs-6" variant="success">Rating: <span>{estateRating}/5</span></Button>
+              <Button style={{border: "none", cursor: "default"}} className="success fs-6" variant="success">Rating: <span>{estateRating}/5</span></Button>
               <Link to={destination}><Button className="success fs-6 px-4" variant="success">{text}</Button></Link>
             </Card.Footer>
           </Col>
