@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { baseAPI, establishmentsAPI } from '../../constants/api';
+import { establishmentsAPI } from '../../constants/api';
 import axios from 'axios';
 import ResidentsDisplay from './ResidentsDisplay';
 
@@ -33,8 +33,6 @@ return(
         const { name, price, rating } = estate.attributes;
         const img = estate.attributes.image.data.attributes.url;
 
-        console.log(estate);
-        console.log(img);
         return (
           <ResidentsDisplay key={id} id={id} estateName={name} estatePrice={price} estateRating={rating} estateImage={img} link="yes" />
         );
